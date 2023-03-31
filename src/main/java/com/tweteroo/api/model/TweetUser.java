@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-public class User {
+public class TweetUser {
     
-    public User(UserDTO data) {
+    public TweetUser(UserDTO data) {
         this.username = data.username();
         this.avatar = data.avatar();
     }
