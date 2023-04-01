@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tweteroo.api.dto.UserDTO;
 import com.tweteroo.api.model.TweetUser;
 import com.tweteroo.api.repository.UserRepository;
+import com.tweteroo.api.service.UserService;
 
 @RestController
 @RequestMapping("/sign-up")
 public class UserController {
     
     @Autowired
-    private UserRepository repository;
+    private UserService service;
 
     @PostMapping
     public ResponseEntity<String> create (@RequestBody UserDTO req) {
-        repository.save(new TweetUser (req));
+        service.save(new TweetUser (req));
         return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 }
