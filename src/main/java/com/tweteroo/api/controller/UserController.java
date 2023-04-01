@@ -22,7 +22,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> create (@RequestBody UserDTO req) {
         repository.save(new TweetUser (req));
-        return ResponseEntity.status(HttpStatus.OK)
-            .body("OK");
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 }
