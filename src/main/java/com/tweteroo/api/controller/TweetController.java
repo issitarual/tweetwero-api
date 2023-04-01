@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tweteroo.api.dto.TweetDTO;
 import com.tweteroo.api.model.Tweet;
-import com.tweteroo.api.repository.TweetRepository;
+import com.tweteroo.api.service.TweetService;
 
 @RestController
 @RequestMapping("/tweets/{username}")
 public class TweetController {
     
     @Autowired
-    private TweetRepository repository;
+    private TweetService service;
 
     @PostMapping
     public ResponseEntity<String> create(@RequestBody TweetDTO req) {
-        repository.save(new Tweet (req));
+        service.save(new Tweet (req));
         return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 
@@ -37,21 +37,21 @@ public class TweetController {
         @RequestParam(required = false) String page
     ) {
         if(username != null && page == null) {
-            return repository.findByUsername(username);
+            return service.findByUsername(username);
         }
         if(username == null && page == null) {
-            return repository.findAll();
+            return service.findAll();
         }
         if(username != null && page != null) {
             int number = Integer.parseInt(page);
             int pageNumber = number *5;
-            List<Tweet> listAllTweets = repository.findByUsername(username);
+            List<Tweet> listAllTweets = service.findByUsername(username);
             return listAllTweets.subList(pageNumber - 5, pageNumber);
         }
         else{
             int number = Integer.parseInt(page);
             int pageNumber = number *5;
-            List<Tweet> listAllTweets = repository.findAll();
+            List<Tweet> listAllTweets = service.findAll();
             if(listAllTweets.size() < 5){
                 return listAllTweets;
             }
